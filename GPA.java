@@ -1,47 +1,47 @@
 import java.io.*;
+import java.util.ArrayList;
 
 public class GPA {
     public static void main(String[] args) {
-        //ArrayList<Term> transcript = new ArrayList<Term>();
+        ArrayList<Term> transcript = new ArrayList<>();
         double totalCreditHours = 0;
         double totalQualityPoints = 0;
+
         try {
-            FileReader fr = new FileReader("grades.txt");
-            BufferedReader br = new BufferedReader(fr);
+            BufferedReader br = new BufferedReader(new FileReader("grades.txt"));
+            String line;
+            Term currentTerm = null;
 
-            String line = br.readLine();
-            while(line != null) {
-                Term term = new Term(line.substring(1,line.length()-2));
-                //transcript.add(term);
-                int numClasses = Integer.parseInt(line.substring(line.length()-1));
-                for(int i = 0; i < numClasses; i++) {
-                    line = br.readLine();
-
+            while ((line = br.readLine()) != null) {
+                if (line.startsWith("*")) {
+                    // New term
+                    currentTerm = new Term(line.substring(1, line.length() - 1));
+                    transcript.add(currentTerm);
+                } else {
+                    // Class entry
                     String[] tokens = line.split(",");
-                    Class c = new Class(tokens[0], Double.parseDouble(tokens[1].trim()), tokens[2].trim());
-
-                    totalCreditHours += Double.parseDouble(tokens[1]);
+                    Class c = new Class(tokens[0].trim(), Double.parseDouble(tokens[1].trim()), tokens[2].trim());
+                    totalCreditHours += c.getCreditHours();
                     c.calculatePoints();
                     totalQualityPoints += c.getPoints();
-
-                    term.addClass(c); 
-
+                    currentTerm.addClass(c);
                 }
-                System.out.print(term.toString());
-                System.out.printf(TextColor.BOLD + TextColor.BRIGHT_BLUE + "GPA: %.2f\t\t" + TextColor.LIGHT_BLUE_RGB + "Credit Hours: %.2f\t" + "Quality Points: %.2f\n\n" + TextColor.RESET,
-                totalQualityPoints / totalCreditHours, totalCreditHours, totalQualityPoints);
-              
-                line = br.readLine();
             }
 
             br.close();
+
+            // Print transcript and calculate GPA
+            for (Term term : transcript) {
+                System.out.print(term.toString());
+            }
+
+            System.out.printf(TextColor.BOLD + TextColor.BRIGHT_BLUE + "Overall GPA: %.2f\t\t" + 
+                              TextColor.LIGHT_BLUE_RGB + "Total Credit Hours: %.2f\t" + 
+                              "Total Quality Points: %.2f\n" + TextColor.RESET,
+                              totalQualityPoints / totalCreditHours, totalCreditHours, totalQualityPoints);
+
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-
-        System.out.println("EOP");
     }
 }
-
-
-
