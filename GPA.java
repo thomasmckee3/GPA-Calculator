@@ -1,9 +1,8 @@
-import java.util.*;
 import java.io.*;
 
 public class GPA {
     public static void main(String[] args) {
-        ArrayList<Term> transcript = new ArrayList<Term>();
+        //ArrayList<Term> transcript = new ArrayList<Term>();
         double totalCreditHours = 0;
         double totalQualityPoints = 0;
         try {
@@ -13,7 +12,7 @@ public class GPA {
             String line = br.readLine();
             while(line != null) {
                 Term term = new Term(line.substring(1,line.length()-2));
-                transcript.add(term);
+                //transcript.add(term);
                 int numClasses = Integer.parseInt(line.substring(line.length()-1));
                 for(int i = 0; i < numClasses; i++) {
                     line = br.readLine();
@@ -28,16 +27,18 @@ public class GPA {
                     term.addClass(c); 
 
                 }
+                System.out.print(term.toString());
+                System.out.printf(TextColor.BOLD + TextColor.BRIGHT_BLUE + "GPA: %.2f\t\t" + TextColor.LIGHT_BLUE_RGB + "Credit Hours: %.2f\t" + "Quality Points: %.2f\n\n" + TextColor.RESET,
+                totalQualityPoints / totalCreditHours, totalCreditHours, totalQualityPoints);
+              
                 line = br.readLine();
             }
+
+            br.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
 
-        for (Term t: transcript) {
-            System.out.println(t);
-        }
-        System.out.printf("GPA: %.2f\t\t\t\tCredit Hours: %.2f\tQuality Points: %.2f\n",totalQualityPoints/totalCreditHours, totalCreditHours, totalQualityPoints);
         System.out.println("EOP");
     }
 }
