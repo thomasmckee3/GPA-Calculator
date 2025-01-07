@@ -6,7 +6,7 @@ Calculates GPA based on a text file of course grades.
 
 1. Grades are stored in a file named grades.txt 
 2. Terms are indicated by starting a line with an asterisk(*) followed by the term name
-3. Courses follow the format *course name*, *credit hours*, *letter grade*
+3. Courses follow the format ***course name***, ***credit hours***, ***letter grade***
 
 e.g
 
