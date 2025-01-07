@@ -46,6 +46,10 @@ public class Class {
                 points = 1.0 * hours;
                 gradeColour = TextColor.RED;
                 break;
+            case "F":
+                points = 0.0 * hours;
+                gradeColour = TextColor.RED;
+                break;
         }
     }
 
