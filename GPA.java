@@ -15,7 +15,7 @@ public class GPA {
             while ((line = br.readLine()) != null) {
                 if (line.startsWith("*")) {
                     // New term
-                    currentTerm = new Term(line.substring(1, line.length() - 1));
+                    currentTerm = new Term(line.substring(1, line.length()));
                     transcript.add(currentTerm);
                 } else {
                     // Class entry
